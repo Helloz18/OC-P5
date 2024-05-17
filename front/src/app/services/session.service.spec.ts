@@ -14,4 +14,11 @@ describe('SessionService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should not be a user while logged out', () => {
+  service.logOut(), () => {
+    expect(service.isLogged).toBeFalsy()
+    expect(service.sessionInformation).toBe(undefined);
+    }
+  });
 });
