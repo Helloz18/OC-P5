@@ -23,14 +23,6 @@ public class TeacherControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Mock
-    private TeacherMapper teacherMapper;
-
-    @Mock
-    private TeacherService teacherService;
-
-    @InjectMocks
-    private TeacherController teacherController;
 
     @Test
     @WithMockUser(roles = "USER")
