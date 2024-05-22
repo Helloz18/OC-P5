@@ -3,6 +3,8 @@ package com.openclassrooms.starterjwt.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.starterjwt.payload.request.LoginRequest;
 import com.openclassrooms.starterjwt.payload.request.SignupRequest;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,10 +25,11 @@ public class AuthControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private ObjectMapper
-            mapper;
+    private ObjectMapper mapper;
 
     @Test
+    @Tag("test login method.")
+    @DisplayName("test login with a correct user.")
     public void whenUserLogInWithCorrectCredentialsThenUserIsLoggedIn() throws Exception {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setEmail("yoga@studio.com");
@@ -39,6 +42,8 @@ public class AuthControllerTest {
     }
 
     @Test
+    @Tag("test register method.")
+    @DisplayName("user registered is created.")
     @Transactional
     @Rollback
     public void whenUserRegisterThenUserIsCreated() throws Exception {
