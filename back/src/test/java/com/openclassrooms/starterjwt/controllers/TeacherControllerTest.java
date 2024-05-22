@@ -1,10 +1,9 @@
 package com.openclassrooms.starterjwt.controllers;
 
-import com.openclassrooms.starterjwt.mapper.TeacherMapper;
-import com.openclassrooms.starterjwt.services.TeacherService;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,50 +18,58 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 public class TeacherControllerTest {
 
-
     @Autowired
     private MockMvc mockMvc;
 
+    @Nested
+    @Tag("test get teacher by id method.")
+    class TestGetTeacherById {
+        @Test
+        @DisplayName("get a teacher with a valid Id.")
+        @WithMockUser(roles = "USER")
+        public void whenGetTeacherByIdThenTeacherIsReturned() throws Exception {
+            // Given
+            Long id = 1L;
+            // When Then
+            mockMvc.perform(get("/api/teacher/" + id))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.firstName").value("Margot"))
+                    .andReturn();
+        }
 
-    @Test
-    @WithMockUser(roles = "USER")
-    public void whenGetTeacherByIdThenTeacherIsReturned() throws Exception {
-        // Given
-        Long id = 1L;
-        // When Then
-        mockMvc.perform(get("/api/teacher/" + id))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.firstName").value("Margot"))
-                .andReturn();
+        @Test
+        @DisplayName("get a teacher but with an Id of a wrong type.")
+        @WithMockUser(roles = "USER")
+        public void whenGetTeacherByIdButIdIsNotAlongThenReturnBadRequest() throws Exception {
+            // Given
+            String id = "1L";
+            // When Then
+            mockMvc.perform(get("/api/teacher/" + id))
+                    .andExpect(status().isBadRequest())
+                    .andReturn();
+        }
+
+        @Test
+        @DisplayName("get a teacher that doesn't exist in the database.")
+        @WithMockUser(roles = "USER")
+        public void whenGetTeacherByIdButTeacherIsNullThenReturnNotFound() throws Exception {
+            // Given
+            Long id = 3L;
+            // When Then
+            mockMvc.perform(get("/api/teacher/" + id))
+                    .andExpect(status().isNotFound())
+                    .andReturn();
+        }
     }
 
     @Test
-    @WithMockUser(roles = "USER")
-    public void whenGetTeacherByIdButIdIsNotAlongThenReturnBadRequest() throws Exception {
-        // Given
-        String id = "1L";
-        // When Then
-        mockMvc.perform(get("/api/teacher/" + id))
-                .andExpect(status().isBadRequest())
-                .andReturn();
-    }
-
-    @Test
-    @WithMockUser(roles = "USER")
-    public void whenGetTeacherByIdButTeacherIsNullThenReturnNotFound() throws Exception {
-        // Given
-        Long id = 3L;
-        // When Then
-        mockMvc.perform(get("/api/teacher/" + id))
-                .andExpect(status().isNotFound())
-                .andReturn();
-    }
-
-    @Test
+    @Tag("test find all teacher method.")
+    @DisplayName("find all teacher returns the right number of teachers in database.")
     @WithMockUser(roles = "USER")
     public void whenFindAllTeachersThenListOfTeachersIsReturned() throws Exception {
         mockMvc.perform(get("/api/teacher"))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
                 .andReturn();
     }
 }
