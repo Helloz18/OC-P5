@@ -28,7 +28,7 @@ public class AuthControllerTest {
     private ObjectMapper mapper;
 
     @Test
-    @Tag("test login method.")
+    @Tag("testLoginMethod")
     @DisplayName("test login with a correct user.")
     public void whenUserLogInWithCorrectCredentialsThenUserIsLoggedIn() throws Exception {
         LoginRequest loginRequest = new LoginRequest();
@@ -42,7 +42,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    @Tag("test register method.")
+    @Tag("testRegisterMethod")
     @DisplayName("user registered is created.")
     @Transactional
     @Rollback

@@ -22,7 +22,7 @@ public class TeacherControllerTest {
     private MockMvc mockMvc;
 
     @Nested
-    @Tag("test get teacher by id method.")
+    @Tag("testGetTeacherByIdMethod")
     class TestGetTeacherById {
         @Test
         @DisplayName("get a teacher with a valid Id.")
@@ -63,7 +63,7 @@ public class TeacherControllerTest {
     }
 
     @Test
-    @Tag("test find all teacher method.")
+    @Tag("testFindAllTeacherMethod")
     @DisplayName("find all teacher returns the right number of teachers in database.")
     @WithMockUser(roles = "USER")
     public void whenFindAllTeachersThenListOfTeachersIsReturned() throws Exception {
