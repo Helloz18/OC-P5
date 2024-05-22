@@ -49,6 +49,7 @@ public class JwtUtilsTest {
     }
 
     @Test
+    @DisplayName("get a Username from a token.")
     public void testGetUserNameFromJwtToken() {
         String username = jwtUtils.getUserNameFromJwtToken(token);
         assertEquals("yoga@studio.com", username);
