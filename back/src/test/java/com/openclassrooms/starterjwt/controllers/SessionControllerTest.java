@@ -2,6 +2,9 @@ package com.openclassrooms.starterjwt.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.starterjwt.dto.SessionDto;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,29 +31,48 @@ public class SessionControllerTest {
     @Autowired
     private ObjectMapper mapper;
 
-    @Test
-    @WithMockUser(roles = "USER")
-    public void whenGetSessionByIdAndSessionIsNullThenNotFoundIsReturned() throws Exception {
-        // Given
-        Long id = 3L;
-        // When Then
-        mockMvc.perform(get("/api/session/" + id))
-                .andExpect(status().isNotFound())
-                .andReturn();
+    @Nested
+    @Tag("testGetSessionById")
+    class TestSessionById {
+        @Test
+        @DisplayName("get a valid session.")
+        @WithMockUser(roles = "USER")
+        public void whenGetSessionByIdWithCorrectIdThenIsOk() throws Exception {
+            // Given
+            Long id = 1L;
+            // When Then
+            mockMvc.perform(get("/api/session/" + id))
+                    .andExpect(status().isOk())
+                    .andReturn();
+        }
+
+        @Test
+        @DisplayName("get a session that doesn't exist.")
+        @WithMockUser(roles = "USER")
+        public void whenGetSessionByIdAndSessionIsNullThenNotFoundIsReturned() throws Exception {
+            // Given
+            Long id = 3L;
+            // When Then
+            mockMvc.perform(get("/api/session/" + id))
+                    .andExpect(status().isNotFound())
+                    .andReturn();
+        }
+
+        @Test
+        @DisplayName("get a session with an Id of a wrong type. ")
+        @WithMockUser(roles = "USER")
+        public void whenGetSessionByIdAndIdIsNotLongThenBadRequestIsReturned() throws Exception {
+            // Given
+            String id = "1L";
+            // When Then
+            mockMvc.perform(get("/api/session/" + id))
+                    .andExpect(status().isBadRequest())
+                    .andReturn();
+        }
     }
 
     @Test
-    @WithMockUser(roles = "USER")
-    public void whenGetSessionByIdAndIdIsNotLongThenBadRequestIsReturned() throws Exception {
-        // Given
-        String id = "1L";
-        // When Then
-        mockMvc.perform(get("/api/session/" + id))
-                .andExpect(status().isBadRequest())
-                .andReturn();
-    }
-
-    @Test
+    @DisplayName("find all sessions.")
     @WithMockUser(roles = "USER")
     public void whenFindAllSessionsThenListOfSessionsIsReturned() throws Exception {
         // Given there is only one session in the database
@@ -63,6 +85,7 @@ public class SessionControllerTest {
     }
 
     @Test
+    @DisplayName("create a valid session.")
     @Transactional // to have all operations in a unique transaction
     @Rollback // to rollback the modification done to the database
     @WithMockUser(roles="USER")
@@ -80,6 +103,7 @@ public class SessionControllerTest {
     }
 
     @Test
+    @DisplayName("update a valid session.")
     @Transactional // to have all operations in a unique transaction
     @Rollback // to rollback the modification done to the database
     @WithMockUser(roles="ADMIN")
@@ -98,6 +122,7 @@ public class SessionControllerTest {
     }
 
     @Test
+    @DisplayName("delete a valid session.")
     @Transactional // to have all operations in a unique transaction
     @Rollback // to rollback the modification done to the database
     @WithMockUser(roles="ADMIN")
@@ -110,6 +135,7 @@ public class SessionControllerTest {
 
     //{id}/participate/{userId}
     @Test
+    @DisplayName("user can participate to a session.")
     @Transactional // to have all operations in a unique transaction
     @Rollback // to rollback the modification done to the database
     @WithMockUser(roles="USER")
@@ -122,6 +148,7 @@ public class SessionControllerTest {
     }
 
     @Test
+    @DisplayName("user can no longer participate to a session.")
     @Transactional // to have all operations in a unique transaction
     @Rollback // to rollback the modification done to the database
     @WithMockUser(roles="USER")
