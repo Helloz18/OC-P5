@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe('Login spec', () => {
   it('Login successfull', () => {
     cy.visit('/login')
@@ -24,4 +26,19 @@ describe('Login spec', () => {
 
     cy.url().should('include', '/sessions')
   })
+
+  it('login with fake email', ()=> {
+    cy.visit('/login')
+    cy.get('input[formControlName=email]').type("error@studio.com")
+    cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
+    cy.get('.error').should('contain.text', 'An error occurred')
+  })
+
+  it('login with fake password', ()=> {
+    cy.visit('/login')
+    cy.get('input[formControlName=email]').type("yoga@studio.com")
+    cy.get('input[formControlName=password]').type(`${"test"}{enter}{enter}`)
+    cy.get('.error').should('contain.text', 'An error occurred')
+  })
+
 });
