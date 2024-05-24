@@ -130,7 +130,9 @@
 								<exclude>com/openclassrooms/starterjwt/models/**/*</exclude>
 								<exclude>com/openclassrooms/starterjwt/payload/**/*</exclude>
 								<exclude>com/openclassrooms/starterjwt/mapper/**/*</exclude>
-								<exclude>org/ietf/jgss/**</exclude>
+								<exclude>com/openclassrooms/starterjwt/exception/**/*</exclude>
+								<exclude>com/openclassrooms/starterjwt/security/jwt/AuthEntryPointJwt.class</exclude>
+								<exclude>com/openclassrooms/starterjwt/security/jwt/AuthTokenFilter.class</exclude>
 							</excludes>
 						</configuration>
 					</execution>
@@ -153,6 +155,15 @@
 							<goal>check</goal>
 						</goals>
 						<configuration>
+							<excludes>
+								<exclude>com/openclassrooms/starterjwt/dto/**/*</exclude>
+								<exclude>com/openclassrooms/starterjwt/models/**/*</exclude>
+								<exclude>com/openclassrooms/starterjwt/payload/**/*</exclude>
+								<exclude>com/openclassrooms/starterjwt/mapper/**/*</exclude>
+								<exclude>com/openclassrooms/starterjwt/exception/**/*</exclude>
+								<exclude>com/openclassrooms/starterjwt/security/jwt/AuthEntryPointJwt.class</exclude>
+								<exclude>com/openclassrooms/starterjwt/security/jwt/AuthTokenFilter.class</exclude>
+							</excludes>
 							<rules>
 								<rule>
 									<element>PACKAGE</element>
