@@ -3,6 +3,7 @@ package com.openclassrooms.starterjwt.services;
 import com.openclassrooms.starterjwt.models.Teacher;
 import com.openclassrooms.starterjwt.repository.TeacherRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -41,6 +42,7 @@ public class TeacherServiceTest {
     }
 
     @Test
+    @DisplayName("find by Id with a valid Id should return a teacher.")
     public void testFindByIdShouldReturnTeacher() {
         // Given
         Long id = 1L;
@@ -53,9 +55,11 @@ public class TeacherServiceTest {
     }
 
     @Test
+    @DisplayName("find by Id with an unknown Id should return null.")
     public void testFindByIdShouldReturnNullIfIdNotKnown() {
         // Given
         Long id = 3L;
+        when(teacherRepository.findById(id)).thenReturn(Optional.ofNullable(null));
         // When
         Teacher result = teacherService.findById(id);
         // Then
@@ -63,6 +67,7 @@ public class TeacherServiceTest {
     }
 
     @Test
+    @DisplayName("find all teachers should return the list of teachers.")
     public void testFindAllShouldReturnListOfTeachers() {
         // Given
         when(teacherRepository.findAll()).thenReturn(Arrays.asList(teacher1, teacher2));

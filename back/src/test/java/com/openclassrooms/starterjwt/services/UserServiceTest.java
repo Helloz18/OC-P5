@@ -3,6 +3,7 @@ package com.openclassrooms.starterjwt.services;
 import com.openclassrooms.starterjwt.models.User;
 import com.openclassrooms.starterjwt.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,6 +36,7 @@ public class UserServiceTest {
     }
 
     @Test
+    @DisplayName("delete by Id should call the repository.")
     public void testDeleteByIdShoudCallRepositoryWithCorrectId() {
         // Given
         Long id = 1L;
@@ -46,6 +48,7 @@ public class UserServiceTest {
     }
 
     @Test
+    @DisplayName("find by Id with a valid Id should return a user.")
     public void whenFindByIdThenUserIsReturned() {
         // Given
         Long id = 1L;

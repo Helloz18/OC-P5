@@ -8,7 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
+
+import javax.transaction.Transactional;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -65,9 +69,9 @@ public class UserControllerTest {
     @Tag("testDeleteUserMethod")
     class TestDeleteUserById {
         @Test
-        @DisplayName("delete a user with a correct Id.")
+        @DisplayName("delete a user with a correct Id but is connected.")
         @WithMockUser(roles = "ADMIN")
-        public void whenDeleteUserByIdButUserIsConnectedThenReturnUnauthorized() throws Exception {
+        public void whenDeleteUserByIdButUserIsNotConnectedThenReturnUnauthorized() throws Exception {
             // Given
             Long id = 1L;
             // When Then
@@ -75,6 +79,21 @@ public class UserControllerTest {
                     .andExpect(status().isUnauthorized())
                     .andReturn();
         }
+
+        @Test
+        @DisplayName("delete a user with a correct Id.")
+        @Transactional
+        @Rollback
+        @WithMockUser(username="yoga@studio.com", roles = {"ADMIN"})
+        public void whenDeleteUserByIdThenReturnOk() throws Exception {
+            // Given
+            Long id = 1L;
+            // When Then
+            mockMvc.perform(delete("/api/user/" + id))
+                    .andExpect(status().isOk())
+                    .andReturn();
+        }
+
 
         @Test
         @DisplayName("delete a user with an Id of the wrong type.")

@@ -58,4 +58,20 @@ public class AuthControllerTest {
                                 .content(mapper.writeValueAsString(signupRequest)))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    @Tag("testRegisterMethod")
+    @DisplayName("user registered is not created when email is already in the database.")
+    public void whenUserRegisterButEmailAlreadyExistsThenUserIsNotCreated() throws Exception {
+        SignupRequest signupRequest = new SignupRequest();
+        signupRequest.setEmail("yoga@studio.com");
+        signupRequest.setFirstName("first");
+        signupRequest.setLastName("Last");
+        signupRequest.setPassword("test!1234");
+
+        mockMvc.perform(post("/api/auth/register")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(mapper.writeValueAsString(signupRequest)))
+                             .andExpect(status().isBadRequest());
+    }
 }

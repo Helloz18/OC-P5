@@ -6,6 +6,7 @@ import com.openclassrooms.starterjwt.models.Teacher;
 import com.openclassrooms.starterjwt.repository.SessionRepository;
 import com.openclassrooms.starterjwt.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -49,6 +50,7 @@ public class SessionServiceTest {
     }
 
     @Test
+    @DisplayName("find all sessions should return the list of sessions.")
     public void testFindAllSessionShouldReturnListOfSessions() {
         // Given
         when(sessionRepository.findAll()).thenReturn(Arrays.asList(session1, session2));
@@ -59,6 +61,7 @@ public class SessionServiceTest {
     }
 
     @Test
+    @DisplayName("get session by Id with a valid Id should return a session.")
     public void testGetSessionByIdWithValidIdShouldReturnSession() {
         // Given
         when(sessionRepository.findById(1L)).thenReturn(Optional.ofNullable(session1));
@@ -69,7 +72,10 @@ public class SessionServiceTest {
     }
 
     @Test
+    @DisplayName("get a session by Id with an invalid Id should return null.")
     public void testGetSessionByIdWithInvalidIdShouldReturnNull() {
+        // Given
+        when(sessionRepository.findById(3L)).thenReturn(Optional.ofNullable(null));
         // When
         Session result = sessionService.getById(3L);
         // Then
@@ -77,16 +83,18 @@ public class SessionServiceTest {
     }
 
     @Test
+    @DisplayName("create a new session should return the session created.")
     public void testCreateSessionShouldReturnSession() {
         // Given
-        // When
         when(sessionRepository.save(session2)).thenReturn(session2);
-        // Then
+        // When
         Session result = sessionService.create(session2);
+        // Then
         assertEquals("session test 2", result.getName());
     }
 
     @Test
+    @DisplayName("delete a session by Id should call the repository.")
     public void testDeleteByIdShoudCallRepositoryWithCorrectId() {
         // Given
         Long id = 1L;
@@ -98,6 +106,7 @@ public class SessionServiceTest {
     }
 
     @Test
+    @DisplayName("participate to a session with a user that doesn't exist should return exception.")
     public void testParticipateWithNullSessionShouldReturnError() {
         NotFoundException exception =
         assertThrows(NotFoundException.class, () -> {
@@ -105,6 +114,4 @@ public class SessionServiceTest {
         });
         assertEquals(NotFoundException.class, exception.getClass());
     }
-
-
 }
