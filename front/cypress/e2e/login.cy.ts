@@ -4,6 +4,7 @@ describe('Login spec', () => {
   it('Login successfull', () => {
     cy.visit('/login')
 
+    //The post request to api/auth/login will return the body - simulation
     cy.intercept('POST', '/api/auth/login', {
       body: {
         id: 1,
@@ -59,6 +60,13 @@ describe('Login spec', () => {
     cy.get('input[formControlName=password]').type(`{enter}{enter}`)
     cy.get('.error').should('contain.text', 'An error occurred')
 
+    cy.url().should('include', '/login')
+  })
+  
+  it('login without email and password', ()=> {
+    cy.visit('/login')
+
+    cy.contains('Submit').should('be.disabled');
     cy.url().should('include', '/login')
   })
 
