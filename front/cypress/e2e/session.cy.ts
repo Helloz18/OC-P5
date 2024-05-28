@@ -5,7 +5,7 @@ describe('Session spec', () => {
       cy.visit('/sessions')
 
       
-    //The post request to api/auth/login will return the body - simulation
+    //Mock The post request to api/auth/login will return the body
     cy.intercept('POST', '/api/auth/login', {
         body: {
           id: 1,
@@ -16,7 +16,7 @@ describe('Session spec', () => {
         },
       })
   
-      //The get request to api/session will return a list of sessions - simulation
+      //Mock The get request to api/session will return a list of sessions
       cy.intercept(
         {
           method: 'GET',
@@ -49,11 +49,11 @@ describe('Session spec', () => {
     })
 
 
-    it('get list of sessions but cannot change session', () => {
+    it('get list of sessions but cannot modify session', () => {
         cy.visit('/sessions')
   
         
-      //The post request to api/auth/login will return the body - simulation
+      //Mock The post request to api/auth/login will return the body
       cy.intercept('POST', '/api/auth/login', {
           body: {
             id: 2,
@@ -64,7 +64,7 @@ describe('Session spec', () => {
           },
         })
     
-        //The get request to api/session will return a list of sessions - simulation
+        //Mock The get request to api/session will return a list of sessions 
         cy.intercept(
           {
             method: 'GET',
@@ -90,9 +90,9 @@ describe('Session spec', () => {
     
   
         // assert that the user connected is not the owner of the session and not an admin
-        cy.contains("Create").should('not.exist')
-        cy.contains("Detail").should('be.visible') 
-        cy.contains("Edit").should('not.exist')
+        cy.contains('button', 'Create').should('not.exist')
+        cy.contains('button', 'Detail').should('be.visible') 
+        cy.contains('button', 'Edit').should('not.exist')
         cy.url().should('include', '/sessions')  
       })
 })
