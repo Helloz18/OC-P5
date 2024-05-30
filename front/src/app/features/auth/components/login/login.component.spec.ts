@@ -11,6 +11,7 @@ import { expect } from '@jest/globals';
 import { SessionService } from 'src/app/services/session.service';
 
 import { LoginComponent } from './login.component';
+import { By } from '@angular/platform-browser';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -38,5 +39,21 @@ describe('LoginComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should call submit when submit button is clicked', () => {
+    const submitSpy = jest.spyOn(component, 'submit');
+    const form = fixture.debugElement.query(By.css('form'));
+
+    // Set form value
+    component.form.controls['email'].setValue('yoga@studio.com');
+    component.form.controls['password'].setValue('test!1234');
+
+    // Trigger form submit
+    form.triggerEventHandler('submit', null);
+
+    expect(submitSpy).toHaveBeenCalled();
+    expect(component.form.valid).toBeTruthy();
+    expect(component.form.value).toEqual({ email: 'yoga@studio.com', password: 'test!1234' });
   });
 });
