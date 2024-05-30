@@ -14,6 +14,7 @@ import { SessionService } from 'src/app/services/session.service';
 import { SessionApiService } from '../../services/session-api.service';
 
 import { FormComponent } from './form.component';
+import { By } from '@angular/platform-browser';
 
 describe('FormComponent', () => {
   let component: FormComponent;
@@ -55,5 +56,51 @@ describe('FormComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should not submit if form is empty', () => {
+    const submitSpy = jest.spyOn(component, 'submit');
+    const sessionForm = fixture.debugElement.query(By.css('form'));
+
+    // no data in the form
+
+    // Trigger form submit
+    sessionForm.triggerEventHandler('submit', null);
+
+    expect(submitSpy).toHaveBeenCalled();
+    expect(component.sessionForm!.valid).toBeFalsy();
+
+    //complete the form
+    component.sessionForm!.controls['name'].setValue('session test');
+    component.sessionForm!.controls['date'].setValue('2024-05-30');
+    component.sessionForm!.controls['teacher_id'].setValue('1');
+    component.sessionForm!.controls['description'].setValue('description');
+     // Trigger form submit
+     sessionForm.triggerEventHandler('submit', null);
+
+     expect(submitSpy).toHaveBeenCalled();
+
+     expect(component.sessionForm!.valid).toBeTruthy();
+     expect(component.sessionForm!.value).toEqual({ name: 'session test', date: '2024-05-30', teacher_id: '1', description: 'description' });
+ 
+  });
+
+  it('should submit if form is correctly filled', () => {
+    const submitSpy = jest.spyOn(component, 'submit');
+    const sessionForm = fixture.debugElement.query(By.css('form'));
+
+    //complete the form
+    component.sessionForm!.controls['name'].setValue('session test');
+    component.sessionForm!.controls['date'].setValue('2024-05-30');
+    component.sessionForm!.controls['teacher_id'].setValue('1');
+    component.sessionForm!.controls['description'].setValue('description');
+    
+    // Trigger form submit
+    sessionForm.triggerEventHandler('submit', null);
+
+    expect(submitSpy).toHaveBeenCalled();
+
+    expect(component.sessionForm!.valid).toBeTruthy();
+    expect(component.sessionForm!.value).toEqual({ name: 'session test', date: '2024-05-30', teacher_id: '1', description: 'description' });
   });
 });
