@@ -1,21 +1,18 @@
 # Yoga App
 
-------
 
 ## Install dependencies and test app
 
--------
-> mvn install
 
 If you want to launch the backend
 
-<strong>Don't forget to adapt the application.properties file with your databases and credentials</strong>
+❗<strong>Don't forget to adapt the application.properties file with your databases and credentials</strong>
 
 > mvn spring-boot:run
 
 ## To perform tests
 
-------
+
 - Create a test database using the script for tests (scriptTest.sql) in ressources/sql folder of the main project
 - Add a file application-test.properties in src/main/resources
 - Add the following information in it (change by your information): 
