@@ -1,67 +1,35 @@
 # Yoga
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0.
-
-## Start the project
-
-Git clone:
-
-> git clone https://github.com/OpenClassrooms-Student-Center/P5-Full-Stack-testing
-
-Go inside folder:
-
-> cd yoga
-
-Install dependencies:
+First, Install dependencies:
 
 > npm install
 
-Launch Front-end:
+If you want to try the application, launch the backend and then launch Front-end with:
 
-> npm run start;
-
-
-## Ressources
-
-### Mockoon env 
-
-### Postman collection
-
-For Postman import the collection
-
-> ressources/postman/yoga.postman_collection.json 
-
-by following the documentation: 
-
-https://learning.postman.com/docs/getting-started/importing-and-exporting-data/#importing-data-into-postman
+> npm run start
 
 
-### MySQL
+## Test
 
-SQL script for creating the schema is available `ressources/sql/script.sql`
+### E2E
 
-By default the admin account is:
-- login: yoga@studio.com
-- password: test!1234
+End-to-End tests are created with <strong>Cypress</strong>
 
+Launching all e2e test:
 
-### Test
+> npm run e2e:ci
 
-#### E2E
-
-Launching e2e test:
-
-> npm run e2e
-
-Generate coverage report (you should launch e2e test before):
+Generate coverage report (you should launch e2e:ci test before):
 
 > npm run e2e:coverage
 
 Report is available here:
 
-> front/coverage/lcov-report/index.html
+> `front/coverage/lcov-report/index.html`
 
-#### Unitary test
+### Unitary test
+
+Unit tests are created with <strong>Jest</strong>
 
 Launching test:
 
@@ -77,4 +45,4 @@ for test coverage:
 
 Report is available here:
 
-> front/coverage/jest/lcov-report/index.html
+> `front/coverage/jest/lcov-report/index.html`

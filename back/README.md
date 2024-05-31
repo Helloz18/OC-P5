@@ -1,6 +1,17 @@
-# Yoga App !
+# Yoga App
 
-# To perform tests
+
+## Install dependencies and test app
+
+
+If you want to launch the backend
+
+❗<strong>Don't forget to adapt the application.properties file with your databases and credentials</strong>
+
+> mvn spring-boot:run
+
+## To perform tests
+
 
 - Create a test database using the script for tests (scriptTest.sql) in ressources/sql folder of the main project
 - Add a file application-test.properties in src/main/resources
@@ -18,8 +29,12 @@
   oc.app.jwtSecret=openclassrooms
   oc.app.jwtExpirationMs=86400000
 ```
-For launch and generate the jacoco code coverage:
-> mvn clean test
 
-For verify the code coverage:
+
+To launch and generate the jacoco code coverage:
+> mvn clean test
+ 
+> the file is :"..\OC-P5\back\target\site\jacoco\index.html"
+
+To verify the code coverage:
 > mvn verify
