@@ -89,6 +89,23 @@ describe('Update Session ', () => {
 
     cy.get('input[formControlName=name]').type(' changed');
 
+    
+    cy.intercept(
+      {
+        method: 'PUT',
+        url: '/api/session/1',
+      },
+      [
+        {
+          id: 1,
+          name: 'session test changed',
+          description: 'new description of a session.',
+          teacher_id: 1,
+          date: new Date(),
+          users: [],
+        },
+      ]
+    );
     // click the save button
     cy.get('button[type="submit"]').click();
 
@@ -190,6 +207,5 @@ describe('Update Session ', () => {
 
     // assert
     cy.contains('Save').should('be.disabled');
-    
-   });
+  });
 });
