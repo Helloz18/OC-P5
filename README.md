@@ -8,6 +8,12 @@ Git clone:
 
 > git clone https://github.com/Helloz18/OC-P5.git
 
+
+❗
+<strong>Place yourself on develop branch</strong>
+
+> git checkout develop
+
 You will find three folders
 
 - back: it is a backend Java Spring Boot
