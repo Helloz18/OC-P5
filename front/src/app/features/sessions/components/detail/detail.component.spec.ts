@@ -42,5 +42,16 @@ describe('DetailComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should go back when mat-icon arrow back is clicked', () => {
+
+    const backSpy = jest.spyOn(window.history, 'back');
+
+    // TODO change with a click on the button, mock a session to do so ?
+    component.back();
+
+    expect(backSpy).toHaveBeenCalled();
+
+  });
 });
 
