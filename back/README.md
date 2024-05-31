@@ -20,6 +20,8 @@
 ```
 For launch and generate the jacoco code coverage:
 > mvn clean test
+ 
+> the file is :"..\OC-P5\back\target\site\jacoco\index.html"
 
 For verify the code coverage:
 > mvn verify
