@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('Create Session ', () => {
+describe('Logout ', () => {
 
     it('should not create session if the field date is not filled', () => {
         cy.visit('/login')
