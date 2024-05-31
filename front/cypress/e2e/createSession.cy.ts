@@ -1,14 +1,15 @@
 /// <reference types="cypress" />
 
 describe('Create Session with Real Backend', () => {
+  let response;
+  let sessions;
+  let token;
+  let teachers;
+  let numberOfSessionsStart : number;
+  let newSessions;
+  let numberOfSessions : number;
   beforeEach(() => {
-    let response;
-    let sessions;
-    let token;
-    let teachers;
-    let numberOfSessionsStart : number;
-    let newSessions;
-    let numberOfSessions : number;
+
 
     // call to the backend
     cy.request('POST', `${Cypress.env('apiUrl')}/api/auth/login`, {
@@ -18,12 +19,16 @@ describe('Create Session with Real Backend', () => {
       this.response = response;
       this.token = response.body.token;
 
-      const authorization = `Bearer ${this.token}`;
+
+      const authorization =`Bearer ${this.token}`;
+
       const getSessions = {
         method: 'GET',
+
         url: `${Cypress.env('apiUrl')}/api/session`,
         headers: {
           authorization,
+          'Content-Type': 'application/json',
         },
       };
 
@@ -45,13 +50,17 @@ describe('Create Session with Real Backend', () => {
           this.teachers = response.body;
         });
 
-    console.log("before");
-    
+    });
+
+  });
+
+  it('should create a valid session saved in the database', () => {
+
     cy.intercept('POST', 'api/session', (req) => {
       // Attach the Bearer token to the request
       
-        req.headers['authorization'] = authorization;
-        req.headers['Authorization'] = authorization;
+       // req.headers['authorization'] = authorization;
+        req.headers['Authorization'] = 'Bearer' + ' '+this.token;
       // Add default value to the request body
         req.body = {
           ...req.body,
@@ -62,12 +71,6 @@ describe('Create Session with Real Backend', () => {
 
     }).as('createSession')
 
-
-    });
-
-  });
-
-  it('should create a valid session saved in the database', () => {
     // go to this page
     cy.visit('/sessions/create');
 
@@ -75,22 +78,27 @@ describe('Create Session with Real Backend', () => {
     // get the response from the backend and populate the return 
     cy.intercept('POST', 'api/auth/login', {
       body: {
+        token: this.token,
+        type: "Bearer",
         id: this.response.body.id,
         username: this.response.body.username,
         firstName: this.response.body.firstName,
         lastName: this.response.body.lastName,
         admin: this.response.body.admin,
       },
+
     });
 
+
     // get the list of sessions that has been get in the before method
-    cy.intercept('GET', 'api/session', this.sessions);
+     cy.intercept('GET', 'api/session', this.sessions);
 
     // fill the form for login
     cy.get('input[formControlName=email]').type('yoga@studio.com');
-    cy.get('input[formControlName=password]').type(
-      `${'test!1234'}{enter}{enter}`
-    );
+    cy.get('input[formControlName=password]').type('test!1234');
+    //cy.contains('button', 'Submit').click();
+    cy.get('form').submit()
+
 
     // at this point the list of sessions should be visible
 
@@ -121,8 +129,8 @@ describe('Create Session with Real Backend', () => {
     cy.get('input[formControlName=date]').type('2024-05-27');
 
     // click the save button
-    cy.contains('button', 'Save').click();
-
+    //cy.contains('button', 'Save').click();
+    cy.get('button[type="submit"]').click();
     ///// PRoblem here, the request is not intercepted
 
     // Wait for the intercepted request
@@ -153,10 +161,14 @@ describe('Create Session with Real Backend', () => {
       //   },
       // };
 
-      // cy.request(saveRequest).then((response) => {
-      //   // Assert the response from cy.request
-      //   expect(response.status).to.eq(200);
-      // });
+    //   // cy.request(saveRequest).then((response) => {
+    //   //   // Assert the response from cy.request
+    //   //   expect(response.status).to.eq(200);
+    //   // });
+
+    //   });
+     });
+
 
       // verify the number of sessions in database
       const getSessions = {
@@ -174,11 +186,8 @@ describe('Create Session with Real Backend', () => {
         // Assert there is a new session that has been saved in database
         expect(this.numberOfSessions).to.be.greaterThan(this.numberOfSessionsStart);
         expect(this.numberOfSessions - 1).to.be.equal(this.numberOfSessionsStart);
-      });
-    });
-
-
     // assert
     cy.url().should('include', '/sessions');
   });
+});
 });
