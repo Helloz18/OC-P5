@@ -184,7 +184,7 @@ describe('Create Session ', () => {
 
     // assert
     cy.get('.mat-simple-snack-bar-content').should(
-      'contain.text',
+      'have.text',
       'Session created !'
     );
     cy.url().should('include', '/sessions');

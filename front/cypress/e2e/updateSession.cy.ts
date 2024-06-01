@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('Update Session ', () => {
+describe('Update Session spec', () => {
   it('should update session if a field is changed', () => {
     cy.visit('/sessions/update/1');
 
@@ -37,13 +37,12 @@ describe('Update Session ', () => {
       ]
     ).as('session');
 
-    let session;
     cy.intercept(
       {
         method: 'GET',
         url: '/api/session/1',
       },
-      (session = {
+      {
         id: 1,
         name: 'session test',
         date: '2024-05-21T07:04:24.000+00:00',
@@ -52,7 +51,7 @@ describe('Update Session ', () => {
         users: [],
         createdAt: '2024-05-21T09:04:24',
         updatedAt: '2024-05-27T09:42:21',
-      })
+      }
     );
 
     cy.get('input[formControlName=email]').type('yoga@studio.com');
@@ -60,13 +59,12 @@ describe('Update Session ', () => {
       `${'test!1234'}{enter}{enter}`
     );
 
-    let teachers;
     cy.intercept(
       {
         method: 'GET',
         url: 'api/teacher',
       },
-      (teachers = [
+      [
         {
           id: 1,
           lastName: 'DELAHAYE',
@@ -81,7 +79,7 @@ describe('Update Session ', () => {
           createdAt: '2024-05-17T11:03:05',
           updatedAt: '2024-05-17T11:03:05',
         },
-      ])
+      ]
     );
 
     // click on edit session, to enter the update session page
@@ -89,7 +87,6 @@ describe('Update Session ', () => {
 
     cy.get('input[formControlName=name]').type(' changed');
 
-    
     cy.intercept(
       {
         method: 'PUT',
@@ -111,7 +108,7 @@ describe('Update Session ', () => {
 
     // assert
     cy.get('.mat-simple-snack-bar-content').should(
-      'contain.text',
+      'have.text',
       'Session updated !'
     );
     cy.url().should('equal', 'http://localhost:4200/sessions');
@@ -153,13 +150,12 @@ describe('Update Session ', () => {
       ]
     ).as('session');
 
-    let session;
     cy.intercept(
       {
         method: 'GET',
         url: '/api/session/1',
       },
-      (session = {
+      {
         id: 1,
         name: 'session test',
         date: '2024-05-21T07:04:24.000+00:00',
@@ -168,7 +164,7 @@ describe('Update Session ', () => {
         users: [],
         createdAt: '2024-05-21T09:04:24',
         updatedAt: '2024-05-27T09:42:21',
-      })
+      }
     );
 
     cy.get('input[formControlName=email]').type('yoga@studio.com');
@@ -176,13 +172,12 @@ describe('Update Session ', () => {
       `${'test!1234'}{enter}{enter}`
     );
 
-    let teachers;
     cy.intercept(
       {
         method: 'GET',
         url: 'api/teacher',
       },
-      (teachers = [
+      [
         {
           id: 1,
           lastName: 'DELAHAYE',
@@ -197,7 +192,7 @@ describe('Update Session ', () => {
           createdAt: '2024-05-17T11:03:05',
           updatedAt: '2024-05-17T11:03:05',
         },
-      ])
+      ]
     );
 
     // click on edit session, to enter the update session page

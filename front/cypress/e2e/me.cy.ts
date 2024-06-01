@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('account tests', () => {
+describe('account spec', () => {
   it('should display the information of the connected Admin', () => {
     cy.visit('/me');
 
@@ -52,11 +52,11 @@ describe('account tests', () => {
     // Assert
     cy.get('h1').should('contain.text', 'User information');
     cy.get('.mat-card-content > div.ng-star-inserted > :nth-child(1)').should(
-      'contain.text',
+      'have.text',
       'Name: Admin YOGAADMIN'
     );
     cy.get('.mat-card-content > div.ng-star-inserted > :nth-child(2)').should(
-      'contain.text',
+      'have.text',
       'Email: yoga@studio.com'
     );
     cy.get('.my2').should('contain.text', 'You are admin');
@@ -114,11 +114,11 @@ describe('account tests', () => {
     // Assert
     cy.get('h1').should('contain.text', 'User information');
     cy.get('.mat-card-content > div.ng-star-inserted > :nth-child(1)').should(
-      'contain.text',
+      'have.text',
       'Name: User NOTADMIN'
     );
     cy.get('.mat-card-content > div.ng-star-inserted > :nth-child(2)').should(
-      'contain.text',
+      'have.text',
       'Email: user@studio.com'
     );
     cy.get('.my2').should('not.contain.text', 'You are admin');
