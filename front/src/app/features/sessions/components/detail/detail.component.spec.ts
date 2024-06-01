@@ -47,7 +47,6 @@ describe('DetailComponent', () => {
 
     const backSpy = jest.spyOn(window.history, 'back');
 
-    // TODO change with a click on the button, mock a session to do so ?
     component.back();
 
     expect(backSpy).toHaveBeenCalled();
