@@ -44,7 +44,7 @@ describe('Register spec', () => {
     );
 
     // assert
-    cy.get('.error').should('contain.text', 'An error occurred');
+    cy.get('.error').should('have.text', 'An error occurred');
     cy.url().should('include', '/register');
   });
 });

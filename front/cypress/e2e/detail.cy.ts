@@ -77,7 +77,7 @@ describe('detail spec', () => {
 
     // assert
     cy.contains('button', 'Delete').should('be.visible');
-    cy.get('h1').should('contain.text', 'Session Test');
+    cy.get('h1').should('have.text', 'Session Test');
     cy.get('.description').should('contain.text', 'test');
     cy.contains('button', 'Participate').should('not.exist');
     cy.contains('button', 'Do not participate').should('not.exist');
@@ -159,7 +159,7 @@ describe('detail spec', () => {
 
     // assert
     cy.contains('button', 'Delete').should('not.exist');
-    cy.get('h1').should('contain.text', 'Session Test');
+    cy.get('h1').should('have.text', 'Session Test');
     cy.get('.description').should('contain.text', 'test');
     // user is participating to this session
     cy.contains('button', 'Participate').should('not.exist');

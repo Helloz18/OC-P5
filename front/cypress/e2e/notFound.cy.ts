@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('not found spec', () => {
+describe('Not found spec', () => {
   it('should show not found page if user visit page that does not exist', () => {
     cy.visit('/unknown');
 

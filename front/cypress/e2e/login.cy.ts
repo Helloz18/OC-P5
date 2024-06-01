@@ -32,7 +32,7 @@ describe('Login spec', () => {
     cy.visit('/login')
     cy.get('input[formControlName=email]').type("error@studio.com")
     cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
-    cy.get('.error').should('contain.text', 'An error occurred')
+    cy.get('.error').should('have.text', 'An error occurred')
 
     cy.url().should('include', '/login')
   })
@@ -41,7 +41,7 @@ describe('Login spec', () => {
     cy.visit('/login')
     cy.get('input[formControlName=email]').type("yoga@studio.com")
     cy.get('input[formControlName=password]').type(`${"test"}{enter}{enter}`)
-    cy.get('.error').should('contain.text', 'An error occurred')
+    cy.get('.error').should('have.text', 'An error occurred')
 
     cy.url().should('include', '/login')
   })
@@ -49,7 +49,7 @@ describe('Login spec', () => {
   it('login without email', ()=> {
     cy.visit('/login')
     cy.get('input[formControlName=password]').type(`${"test"}{enter}{enter}`)
-    cy.get('.error').should('contain.text', 'An error occurred')
+    cy.get('.error').should('have.text', 'An error occurred')
 
     cy.url().should('include', '/login')
   })
@@ -58,7 +58,7 @@ describe('Login spec', () => {
     cy.visit('/login')
     cy.get('input[formControlName=email]').type("yoga@studio.com")
     cy.get('input[formControlName=password]').type(`{enter}{enter}`)
-    cy.get('.error').should('contain.text', 'An error occurred')
+    cy.get('.error').should('have.text', 'An error occurred')
 
     cy.url().should('include', '/login')
   })
